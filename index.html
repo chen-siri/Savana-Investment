@@ -863,7 +863,7 @@ a { text-decoration: none; color: inherit; }
     if(!active){it.classList.add('active');ans.style.maxHeight=inner.scrollHeight+'px'}};
     var f=document.querySelector('.faq-item.active .faq-answer');if(f)f.style.maxHeight=f.querySelector('.faq-answer-inner').scrollHeight+'px';
 
-    document.getElementById('applyForm').addEventListener('submit',function(e){e.preventDefault();this.style.display='none';var s=document.getElementById('formSuccess');s.classList.add('show');var c=document.getElementById('formCard');c.style.display='flex';c.style.alignItems='center';c.style.justifyContent='center';c.style.minHeight='400px'});
+    var applyForm=document.getElementById('applyForm');if(applyForm)applyForm.addEventListener('submit',function(e){e.preventDefault();this.style.display='none';var s=document.getElementById('formSuccess');s.classList.add('show');var c=document.getElementById('formCard');c.style.display='flex';c.style.alignItems='center';c.style.justifyContent='center';c.style.minHeight='400px'});
 
     // ── CHAT WIDGET ──
     var CHAT_API = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
