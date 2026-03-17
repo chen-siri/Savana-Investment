@@ -1,0 +1,14 @@
+[Unit]
+Description=Savana Chat API
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/savana-chat
+ExecStart=/root/.bun/bin/bun src/index.ts
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
