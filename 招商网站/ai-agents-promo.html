@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAVANA AI 智能招商体系 | 双向招商 · 三大 Agent</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark-2: #1A1A1A;
+    --accent: #F5A623;
+    --accent-bright: #FFB833;
+    --accent-dark: #D4900A;
+    --accent-glow: rgba(245,166,35,0.35);
+    --white: #FFFFFF;
+    --gray-100: #F5F5F5;
+    --gray-300: #AAAAAA;
+    --gray-500: #777777;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+    background: var(--black); color: var(--white);
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+
+/* ── GLOBAL BACKGROUND ── */
+.bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+}
+.bg-glow-1 {
+    position: fixed; width: 800px; height: 800px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 70%);
+    top: -200px; right: -200px; z-index: 0; pointer-events: none;
+    animation: floatGlow 20s ease-in-out infinite;
+}
+.bg-glow-2 {
+    position: fixed; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.04) 0%, transparent 70%);
+    bottom: -100px; left: -150px; z-index: 0; pointer-events: none;
+    animation: floatGlow 25s ease-in-out infinite reverse;
+}
+@keyframes floatGlow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.1); }
+    66% { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* ── HERO SECTION ── */
+.hero {
+    position: relative; min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; z-index: 1; overflow: hidden;
+    padding: 80px 40px;
+}
+.hero-content {
+    max-width: 1200px; width: 100%; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+
+/* Left side */
+.hero-left { position: relative; }
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 20px; border-radius: 999px;
+    background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.25);
+    font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-bright); margin-bottom: 32px;
+    animation: fadeInUp 0.8s ease both;
+}
+.hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-bright); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+
+.hero-subtitle {
+    font-size: 16px; font-weight: 400; color: var(--gray-300);
+    letter-spacing: 3px; margin-bottom: 16px;
+    animation: fadeInUp 0.8s ease 0.1s both;
+}
+.hero-title {
+    font-size: clamp(42px, 5.5vw, 72px); font-weight: 900;
+    line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+.hero-title .accent { color: var(--accent-bright); }
+.hero-title .divider {
+    display: inline-block; width: 3px; height: 0.8em; background: var(--accent);
+    margin: 0 16px; vertical-align: middle; border-radius: 2px;
+    opacity: 0.6;
+}
+.hero-desc {
+    font-size: 18px; line-height: 1.8; color: var(--gray-300);
+    max-width: 480px; margin-bottom: 48px;
+    animation: fadeInUp 0.8s ease 0.3s both;
+}
+.hero-desc strong { color: var(--accent-bright); font-weight: 600; }
+
+/* Stats */
+.hero-stats {
+    display: flex; gap: 0; animation: fadeInUp 0.8s ease 0.4s both;
+}
+.stat-item {
+    padding: 0 32px; border-right: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+.stat-item:first-child { padding-left: 0; }
+.stat-item:last-child { border-right: none; }
+.stat-num {
+    font-size: 42px; font-weight: 900; letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--accent-bright), var(--accent-dark));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1.1;
+}
+.stat-num span { font-size: 20px; font-weight: 600; }
+.stat-label { font-size: 13px; color: var(--gray-500); margin-top: 6px; letter-spacing: 0.5px; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── ORBITAL DIAGRAM (Right side) ── */
+.orbital-container {
+    position: relative; width: 100%; aspect-ratio: 1; max-width: 520px;
+    margin: 0 auto; animation: fadeIn 1.2s ease 0.5s both;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Orbit rings */
+.orbit-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px dashed rgba(245,166,35,0.15);
+    animation: rotateOrbit 60s linear infinite;
+}
+.orbit-ring-1 { inset: 5%; border-color: rgba(245,166,35,0.2); animation-duration: 80s; }
+.orbit-ring-2 { inset: 18%; border-style: dotted; border-color: rgba(245,166,35,0.12); animation-duration: 50s; animation-direction: reverse; }
+.orbit-ring-3 { inset: 30%; border-color: rgba(245,166,35,0.08); animation-duration: 40s; }
+@keyframes rotateOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Center core */
+.orbit-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 140px; height: 140px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-bright), var(--accent-dark));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow:
+        0 0 60px rgba(245,166,35,0.3),
+        0 0 120px rgba(245,166,35,0.15),
+        inset 0 -4px 12px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+.orbit-center::after {
+    content: ''; position: absolute; inset: -12px; border-radius: 50%;
+    border: 1px solid rgba(245,166,35,0.3);
+    animation: pulseRing 3s ease-in-out infinite;
+}
+@keyframes pulseRing {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0; }
+}
+.orbit-center-logo {
+    font-size: 18px; font-weight: 900; color: var(--black);
+    letter-spacing: 1px; line-height: 1;
+}
+.orbit-center-sub {
+    font-size: 11px; font-weight: 600; color: rgba(0,0,0,0.6);
+    margin-top: 4px; letter-spacing: 0.5px;
+}
+
+/* Agent nodes */
+.agent-node {
+    position: absolute; z-index: 5; display: flex; flex-direction: column;
+    align-items: center; gap: 12px;
+}
+.agent-dot {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(245,166,35,0.15); border: 2px solid rgba(245,166,35,0.5);
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(12px); transition: all 0.4s ease;
+    box-shadow: 0 0 40px rgba(245,166,35,0.15);
+}
+.agent-dot svg { width: 28px; height: 28px; color: var(--accent-bright); }
+.agent-node:hover .agent-dot {
+    background: rgba(245,166,35,0.3); border-color: var(--accent-bright);
+    box-shadow: 0 0 50px rgba(245,166,35,0.4);
+    transform: scale(1.15);
+}
+.agent-label {
+    text-align: center; white-space: nowrap;
+}
+.agent-name {
+    font-size: 22px; font-weight: 800; color: var(--white);
+    margin-bottom: 4px; letter-spacing: 0.5px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+.agent-role {
+    font-size: 18px; font-weight: 700; color: var(--accent-bright);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(245,166,35,0.3);
+}
+
+/* Node positions */
+.agent-node-1 { top: -2%; left: 50%; transform: translateX(-50%); }
+.agent-node-2 { bottom: 6%; left: -4%; }
+.agent-node-3 { bottom: 6%; right: -4%; }
+
+/* Connection lines */
+.connection-line {
+    position: absolute; z-index: 2;
+}
+.conn-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.conn-path {
+    stroke: rgba(245,166,35,0.2); stroke-width: 1; fill: none;
+    stroke-dasharray: 6 4;
+    animation: dashFlow 3s linear infinite;
+}
+@keyframes dashFlow { to { stroke-dashoffset: -30; } }
+
+/* Floating particles */
+.particle {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    background: var(--accent-bright); opacity: 0;
+    animation: particleFloat 4s ease-in-out infinite;
+}
+.p1 { width: 3px; height: 3px; top: 20%; left: 15%; animation-delay: 0s; }
+.p2 { width: 2px; height: 2px; top: 60%; right: 10%; animation-delay: 1s; }
+.p3 { width: 4px; height: 4px; bottom: 25%; left: 30%; animation-delay: 2s; }
+.p4 { width: 2px; height: 2px; top: 35%; right: 25%; animation-delay: 0.5s; }
+.p5 { width: 3px; height: 3px; top: 75%; left: 60%; animation-delay: 1.5s; }
+.p6 { width: 2px; height: 2px; top: 10%; right: 40%; animation-delay: 2.5s; }
+@keyframes particleFloat {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
+    20% { opacity: 0.8; transform: translateY(-10px) scale(1); }
+    80% { opacity: 0.3; transform: translateY(-30px) scale(0.5); }
+}
+
+/* ── AGENTS DETAIL SECTION ── */
+.agents-section {
+    position: relative; z-index: 1; padding: 120px 40px;
+    background: linear-gradient(180deg, var(--black) 0%, #0d0d0d 100%);
+}
+.agents-inner { max-width: 1200px; margin: 0 auto; }
+.agents-header { text-align: center; margin-bottom: 80px; }
+.agents-header-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent-bright); margin-bottom: 20px;
+    padding: 6px 16px; border-radius: 999px;
+    background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.15);
+}
+.agents-header h2 {
+    font-size: clamp(36px, 4.5vw, 58px); font-weight: 900;
+    letter-spacing: -1px; margin-bottom: 16px;
+}
+.agents-header p {
+    font-size: 17px; color: var(--gray-500); max-width: 600px; margin: 0 auto;
+    line-height: 1.8;
+}
+
+.agents-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.agent-card {
+    position: relative; padding: 48px 36px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px; overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.agent-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top, rgba(245,166,35,0.06) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.5s ease;
+}
+.agent-card:hover::before { opacity: 1; }
+.agent-card:hover {
+    border-color: rgba(245,166,35,0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(245,166,35,0.05);
+}
+.agent-card-num {
+    position: absolute; top: 20px; right: 24px;
+    font-size: 80px; font-weight: 900; line-height: 1;
+    color: rgba(255,255,255,0.02); letter-spacing: -4px;
+    transition: color 0.5s ease;
+}
+.agent-card:hover .agent-card-num { color: rgba(245,166,35,0.06); }
+.agent-card-icon {
+    width: 68px; height: 68px; border-radius: 20px;
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px; position: relative; z-index: 1;
+    transition: all 0.4s ease;
+}
+.agent-card:hover .agent-card-icon {
+    background: rgba(245,166,35,0.2); box-shadow: 0 0 40px rgba(245,166,35,0.2);
+}
+.agent-card-icon svg { width: 34px; height: 34px; color: var(--accent-bright); }
+.agent-card-title {
+    font-size: 32px; font-weight: 900; margin-bottom: 8px;
+    position: relative; z-index: 1; letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--white) 0%, rgba(255,255,255,0.85) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.agent-card-role {
+    font-size: 16px; font-weight: 700; color: var(--accent-bright);
+    letter-spacing: 3px; margin-bottom: 24px;
+    position: relative; z-index: 1;
+}
+.agent-card-desc {
+    font-size: 15px; color: var(--gray-500); line-height: 1.8;
+    position: relative; z-index: 1;
+}
+.agent-card-features {
+    list-style: none; margin-top: 24px; position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 10px;
+}
+.agent-card-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--gray-300);
+}
+.agent-card-features li::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+}
+
+/* ── FLOW SECTION ── */
+.flow-section {
+    position: relative; z-index: 1; padding: 120px 40px;
+    background: var(--dark);
+}
+.flow-inner { max-width: 1200px; margin: 0 auto; }
+.flow-header { text-align: center; margin-bottom: 80px; }
+.flow-header h2 {
+    font-size: clamp(32px, 4vw, 48px); font-weight: 900; letter-spacing: -1px;
+}
+.flow-header p {
+    font-size: 17px; color: var(--gray-500); max-width: 500px; margin: 16px auto 0;
+    line-height: 1.8;
+}
+
+.flow-timeline {
+    position: relative; display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 40px 0;
+}
+.flow-timeline::before {
+    content: ''; position: absolute; top: 56px; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.3) 20%, rgba(245,166,35,0.3) 80%, transparent 100%);
+}
+.flow-timeline::after {
+    content: ''; position: absolute; top: 55px; left: 10%;
+    width: 0; height: 4px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-bright), var(--accent-dark));
+    animation: flowLine 4s ease-in-out infinite;
+}
+@keyframes flowLine {
+    0% { width: 0; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { width: 80%; opacity: 0; }
+}
+
+.flow-step {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    text-align: center; position: relative; z-index: 1;
+}
+.flow-step-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--dark); border: 2px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px; transition: all 0.4s ease;
+    font-size: 14px; font-weight: 800; color: var(--accent-bright);
+}
+.flow-step:hover .flow-step-dot {
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 20px rgba(245,166,35,0.3);
+    background: rgba(245,166,35,0.1);
+}
+.flow-step-icon {
+    width: 72px; height: 72px; border-radius: 18px;
+    background: rgba(245,166,35,0.06); border: 1px solid rgba(245,166,35,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; transition: all 0.4s ease;
+}
+.flow-step:hover .flow-step-icon {
+    background: rgba(245,166,35,0.12); border-color: rgba(245,166,35,0.25);
+    transform: translateY(-4px);
+}
+.flow-step-icon svg { width: 32px; height: 32px; color: var(--accent-bright); }
+.flow-step-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.flow-step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; max-width: 160px; }
+
+/* ── METRICS SECTION ── */
+.metrics-section {
+    position: relative; z-index: 1; padding: 120px 40px;
+    background: linear-gradient(135deg, #0f0c08 0%, #1a1510 50%, #0f0c08 100%);
+    overflow: hidden;
+}
+.metrics-section::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%);
+}
+.metrics-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+.metrics-header { text-align: center; margin-bottom: 80px; }
+.metrics-header h2 {
+    font-size: clamp(32px, 4vw, 48px); font-weight: 900; letter-spacing: -1px;
+}
+.metrics-header p {
+    font-size: 17px; color: var(--gray-500); margin-top: 16px; line-height: 1.8;
+}
+
+.metrics-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+}
+.metric-card {
+    position: relative; padding: 48px 40px; text-align: center;
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 24px; overflow: hidden;
+    transition: all 0.5s ease;
+}
+.metric-card::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+    opacity: 0; transition: opacity 0.5s ease;
+}
+.metric-card:hover::before { opacity: 1; }
+.metric-card:hover {
+    border-color: rgba(245,166,35,0.15);
+    transform: translateY(-4px);
+}
+.metric-value {
+    font-size: 64px; font-weight: 900; letter-spacing: -3px;
+    background: linear-gradient(135deg, var(--accent-bright) 0%, #FFD700 50%, var(--accent-dark) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1; margin-bottom: 8px;
+}
+.metric-value span {
+    font-size: 32px; letter-spacing: 0;
+}
+.metric-label {
+    font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 12px;
+}
+.metric-desc {
+    font-size: 14px; color: var(--gray-500); line-height: 1.7;
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+    position: relative; z-index: 1; padding: 120px 40px;
+    text-align: center;
+    background: var(--black);
+}
+.cta-inner { max-width: 700px; margin: 0 auto; }
+.cta-glow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+.cta-inner h2 {
+    font-size: clamp(36px, 4.5vw, 56px); font-weight: 900;
+    letter-spacing: -1px; margin-bottom: 20px;
+    position: relative;
+}
+.cta-inner p {
+    font-size: 18px; color: var(--gray-500); line-height: 1.8;
+    margin-bottom: 48px; position: relative;
+}
+.cta-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 20px 48px; border-radius: 999px; border: none;
+    background: linear-gradient(135deg, var(--accent-bright), var(--accent-dark));
+    color: var(--black); font-size: 18px; font-weight: 800;
+    cursor: pointer; transition: all 0.4s ease; position: relative;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 32px rgba(245,166,35,0.25);
+}
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 48px rgba(245,166,35,0.35);
+}
+.cta-btn svg { width: 20px; height: 20px; transition: transform 0.3s; }
+.cta-btn:hover svg { transform: translateX(4px); }
+
+/* ── FOOTER ── */
+.footer {
+    position: relative; z-index: 1; padding: 40px;
+    text-align: center; border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer p { font-size: 13px; color: var(--gray-500); letter-spacing: 0.5px; }
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible {
+    opacity: 1; transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── NUMBER COUNTER ANIMATION ── */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+    .hero-content { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+    .hero-left { display: flex; flex-direction: column; align-items: center; }
+    .hero-desc { margin-left: auto; margin-right: auto; }
+    .hero-stats { justify-content: center; }
+    .orbital-container { max-width: 400px; }
+    .agents-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .metrics-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+    .flow-timeline { flex-direction: column; gap: 48px; align-items: center; }
+    .flow-timeline::before, .flow-timeline::after { display: none; }
+}
+@media (max-width: 640px) {
+    .hero { padding: 60px 24px; }
+    .hero-stats { flex-direction: column; gap: 20px; }
+    .stat-item { padding: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; text-align: center; }
+    .stat-item:last-child { border-bottom: none; }
+    .agents-section, .flow-section, .metrics-section, .cta-section { padding: 80px 24px; }
+    .agent-node-1 { top: -4%; }
+    .agent-node-2 { bottom: 4%; left: -6%; }
+    .agent-node-3 { bottom: 4%; right: -6%; }
+    .agent-name { font-size: 18px; }
+    .agent-role { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-left">
+            <div class="hero-badge">AI-POWERED RECRUITMENT</div>
+            <p class="hero-subtitle">面向招商全流程的 AI 智能体系</p>
+            <h1 class="hero-title">
+                <span class="accent">双向招商</span><span class="divider"></span>三大 Agent
+            </h1>
+            <p class="hero-desc">
+                以 <strong>AI Agent</strong> 驱动招商全链路，实现品牌主动寻源与商家智能入驻的<strong>双向闭环</strong>，重新定义供应商招募效率。
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-num" data-target="30">0<span>%</span></div>
+                    <div class="stat-label">转化率提升</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">7×24<span>h</span></div>
+                    <div class="stat-label">客服在线时长</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="40">0<span>%</span></div>
+                    <div class="stat-label">人工负担降低</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orbital Diagram -->
+        <div class="orbital-container">
+            <div class="orbit-ring orbit-ring-1"></div>
+            <div class="orbit-ring orbit-ring-2"></div>
+            <div class="orbit-ring orbit-ring-3"></div>
+
+            <svg class="conn-svg" viewBox="0 0 520 520" fill="none">
+                <path class="conn-path" d="M260 60 Q380 180 260 260" />
+                <path class="conn-path" d="M260 260 Q140 360 100 420" style="animation-delay: -1s;" />
+                <path class="conn-path" d="M260 260 Q380 360 420 420" style="animation-delay: -2s;" />
+            </svg>
+
+            <div class="orbit-center">
+                <div class="orbit-center-logo">SAVANA</div>
+                <div class="orbit-center-sub">招商助手</div>
+            </div>
+
+            <!-- Agent nodes -->
+            <div class="agent-node agent-node-1">
+                <div class="agent-dot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </div>
+                <div class="agent-label">
+                    <div class="agent-name">品牌主动寻源</div>
+                    <div class="agent-role">寻源 Agent</div>
+                </div>
+            </div>
+
+            <div class="agent-node agent-node-2">
+                <div class="agent-dot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+                    </svg>
+                </div>
+                <div class="agent-label">
+                    <div class="agent-name">资质筛选评估</div>
+                    <div class="agent-role">审核 Agent</div>
+                </div>
+            </div>
+
+            <div class="agent-node agent-node-3">
+                <div class="agent-dot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <div class="agent-label">
+                    <div class="agent-name">商家主动入驻</div>
+                    <div class="agent-role">客服 Agent</div>
+                </div>
+            </div>
+
+            <!-- Floating particles -->
+            <div class="particle p1"></div>
+            <div class="particle p2"></div>
+            <div class="particle p3"></div>
+            <div class="particle p4"></div>
+            <div class="particle p5"></div>
+            <div class="particle p6"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ AGENTS DETAIL ═══ -->
+<section class="agents-section">
+    <div class="agents-inner">
+        <div class="agents-header reveal">
+            <div class="agents-header-tag">THREE CORE AGENTS</div>
+            <h2>三大核心 <span style="color:var(--accent-bright)">Agent</span> 能力</h2>
+            <p>每个 Agent 专注招商链路中的关键环节，协同运作构建完整智能招商闭环</p>
+        </div>
+
+        <div class="agents-grid">
+            <!-- Card 1 -->
+            <div class="agent-card reveal reveal-delay-1">
+                <div class="agent-card-num">01</div>
+                <div class="agent-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </div>
+                <div class="agent-card-title">寻源 Agent</div>
+                <div class="agent-card-role">SOURCING AGENT</div>
+                <p class="agent-card-desc">品牌主动出击，智能搜索并筛选潜力供应商，基于品类需求自动匹配最优货源。</p>
+                <ul class="agent-card-features">
+                    <li>1688 / 工厂资源智能抓取</li>
+                    <li>多维度供应商画像分析</li>
+                    <li>品类匹配度自动评估</li>
+                    <li>竞品供应链反向追踪</li>
+                </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="agent-card reveal reveal-delay-2">
+                <div class="agent-card-num">02</div>
+                <div class="agent-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+                    </svg>
+                </div>
+                <div class="agent-card-title">审核 Agent</div>
+                <div class="agent-card-role">REVIEW AGENT</div>
+                <p class="agent-card-desc">自动完成供应商资质审核与综合评估，确保合作伙伴品质达标、风险可控。</p>
+                <ul class="agent-card-features">
+                    <li>企业资质自动核验</li>
+                    <li>供货能力多维评分</li>
+                    <li>风险预警与合规检查</li>
+                    <li>历史合作数据分析</li>
+                </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="agent-card reveal reveal-delay-3">
+                <div class="agent-card-num">03</div>
+                <div class="agent-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <div class="agent-card-title">客服 Agent</div>
+                <div class="agent-card-role">SERVICE AGENT</div>
+                <p class="agent-card-desc">7×24h 智能客服，面向主动入驻商家提供全流程引导与即时答疑服务。</p>
+                <ul class="agent-card-features">
+                    <li>7×24 小时全天候响应</li>
+                    <li>入驻流程智能引导</li>
+                    <li>合作政策精准解答</li>
+                    <li>多语言沟通能力</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FLOW ═══ -->
+<section class="flow-section">
+    <div class="flow-inner">
+        <div class="flow-header reveal">
+            <div class="agents-header-tag">INTELLIGENT WORKFLOW</div>
+            <h2>AI 驱动 <span style="color:var(--accent-bright)">全流程</span></h2>
+            <p>从发现到入驻，每一步都由 AI Agent 智能驱动</p>
+        </div>
+
+        <div class="flow-timeline reveal">
+            <div class="flow-step">
+                <div class="flow-step-dot">1</div>
+                <div class="flow-step-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                </div>
+                <div class="flow-step-title">需求解析</div>
+                <div class="flow-step-desc">AI 理解企划需求，拆解品类与规格</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-step-dot">2</div>
+                <div class="flow-step-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </div>
+                <div class="flow-step-title">智能寻源</div>
+                <div class="flow-step-desc">寻源 Agent 全网搜索匹配供应商</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-step-dot">3</div>
+                <div class="flow-step-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <div class="flow-step-title">资质审核</div>
+                <div class="flow-step-desc">审核 Agent 多维评估资质与能力</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-step-dot">4</div>
+                <div class="flow-step-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <div class="flow-step-title">智能沟通</div>
+                <div class="flow-step-desc">客服 Agent 全天候引导入驻</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-step-dot">5</div>
+                <div class="flow-step-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <div class="flow-step-title">入驻完成</div>
+                <div class="flow-step-desc">自动建档开始供货合作</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ METRICS ═══ -->
+<section class="metrics-section">
+    <div class="metrics-inner">
+        <div class="metrics-header reveal">
+            <div class="agents-header-tag">PROVEN RESULTS</div>
+            <h2>数据驱动的 <span style="color:var(--accent-bright)">招商革新</span></h2>
+            <p>AI Agent 体系带来可量化的业务提升</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card reveal reveal-delay-1">
+                <div class="metric-value">30<span>%</span></div>
+                <div class="metric-label">转化率提升</div>
+                <p class="metric-desc">通过 AI 精准匹配与智能跟进，大幅提升供应商招募成功率</p>
+            </div>
+            <div class="metric-card reveal reveal-delay-2">
+                <div class="metric-value">7×24<span>h</span></div>
+                <div class="metric-label">全天候在线服务</div>
+                <p class="metric-desc">客服 Agent 永不离线，随时响应商家咨询与入驻需求</p>
+            </div>
+            <div class="metric-card reveal reveal-delay-3">
+                <div class="metric-value">40<span>%</span></div>
+                <div class="metric-label">人工负担降低</div>
+                <p class="metric-desc">自动化处理重复性审核与沟通工作，释放团队核心精力</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-inner reveal">
+        <h2>开启 <span style="color:var(--accent-bright)">AI 招商</span> 新时代</h2>
+        <p>三大 Agent 协同运作，让每一个优质供应商都不会被错过</p>
+        <button class="cta-btn" onclick="window.location.href='index.html'">
+            了解更多
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>SAVANA &copy; 2026 &nbsp;·&nbsp; AI-Powered Merchant Recruitment System</p>
+</footer>
+
+<script>
+// Number counter animation
+function animateCounters() {
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.querySelector('span')?.outerHTML || '';
+        let current = 0;
+        const step = target / 40;
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.innerHTML = Math.round(current) + suffix;
+        }, 40);
+    });
+}
+setTimeout(animateCounters, 800);
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Orbital hover interaction
+document.querySelectorAll('.agent-node').forEach(node => {
+    node.addEventListener('mouseenter', () => {
+        document.querySelectorAll('.orbit-ring').forEach(ring => {
+            ring.style.animationPlayState = 'paused';
+        });
+    });
+    node.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.orbit-ring').forEach(ring => {
+            ring.style.animationPlayState = 'running';
+        });
+    });
+});
+</script>
+</body>
+</html>
